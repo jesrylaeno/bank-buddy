@@ -1,0 +1,20 @@
+{
+  "name": "bank-buddy",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "bank-buddy-be",
+    "bank-buddy-fe"
+  ],
+  "scripts": {
+    "start:be": "npm --prefix bank-buddy-be run start",
+    "start:fe": "npm --prefix bank-buddy-fe run start",
+    "dev": "concurrently \"npm run start:be\" \"npm run start:fe\"",
+    "format": "npm run format:be && npm run format:fe",
+    "format:be": "npm --prefix bank-buddy-be run format",
+    "format:fe": "npm --prefix bank-buddy-fe run format"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
