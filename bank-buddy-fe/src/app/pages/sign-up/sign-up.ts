@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
+import { UserService } from '../../core/services/user';
 
 @Component({
   selector: 'app-signup',
@@ -11,27 +12,48 @@ import { RouterModule, Router } from '@angular/router';
   styleUrls: ['./sign-up.scss']
 })
 export class SignupComponent {
-  username: string = '';
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  signupSuccess: boolean = false;
+  username = '';
+  email = '';
+  password = '';
+  confirmPassword = '';
+  signupSuccess = false;
+  errorMessage = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   onSubmit() {
-    if (this.password !== this.confirmPassword) {
-      console.log('Sign-up data: Passwords mismatch.');
-      return; // Prevent submission if passwords don't match
-    } // Simulate success
+    this.errorMessage = '';
 
-    this.signupSuccess = true;
-    console.log('Sign-up data:', {
-      username: this.username,
-      email: this.email,
-      password: this.password
-    });
-    // Later: Connect to backend
+    if (this.password !== this.confirmPassword) {
+      this.errorMessage = 'Passwords do not match.';
+      return;
+    }
+
+    this.userService
+      .signUp({
+        username: this.username,
+        email: this.email,
+        password: this.password
+      })
+      .subscribe({
+        next: () => {
+          this.signupSuccess = true;
+
+          this.cdRef.detectChanges(); // Force update
+          // Delay before navigating to login
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 5000); // 2 seconds
+        },
+        error: (err) => {
+          this.errorMessage = err?.error?.message || 'Signup failed.';
+          console.error('Signup error:', err);
+        }
+      });
   }
 
   confirmSuccess() {

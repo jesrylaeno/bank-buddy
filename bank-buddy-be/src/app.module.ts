@@ -22,6 +22,7 @@ import path from 'path';
     //   }),
     //   inject: [ConfigService],
     // }),
+    ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
   ],
   controllers: [AppController],

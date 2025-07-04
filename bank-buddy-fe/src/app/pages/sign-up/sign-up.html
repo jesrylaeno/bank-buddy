@@ -92,7 +92,8 @@
 
     <!-- Success Message -->
     <ng-template #successBlock>
-      <div class="success-message">
+      <div class="success-message" style="border: 2px dashed #28a745; padding: 1rem">
+        <h3 style="color: #28a745">Success!</h3>
         <p>Your account has been created successfully!</p>
         <button (click)="confirmSuccess()" class="btn-confirm">Go to Login</button>
       </div>
