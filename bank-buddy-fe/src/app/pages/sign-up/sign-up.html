@@ -1,0 +1,101 @@
+<div class="signup-wrapper">
+  <div class="signup-container">
+    <ng-container *ngIf="!signupSuccess; else successBlock">
+      <h2>Create Your Account</h2>
+      <p class="subtitle">Fill in the details to get started</p>
+
+      <form (ngSubmit)="onSubmit()" #signupForm="ngForm" novalidate>
+        <!-- Username -->
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            [(ngModel)]="username"
+            #usernameField="ngModel"
+            placeholder="Choose a username"
+          />
+          <div class="error-message" *ngIf="usernameField.invalid && usernameField.touched">
+            Username is required.
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            email
+            [(ngModel)]="email"
+            #emailField="ngModel"
+            placeholder="Enter your email"
+          />
+          <div class="error-message" *ngIf="emailField.touched && emailField.invalid">
+            <span *ngIf="emailField.errors?.['required']">Email is required.</span>
+            <span *ngIf="emailField.errors?.['email']">Please enter a valid email address.</span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            [(ngModel)]="password"
+            #passwordField="ngModel"
+            placeholder="Create a password"
+          />
+          <div class="error-message" *ngIf="passwordField.invalid && passwordField.touched">
+            Password is required.
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            required
+            [(ngModel)]="confirmPassword"
+            #confirmPass="ngModel"
+            placeholder="Re-enter your password"
+          />
+          <div class="error-message" *ngIf="confirmPassword && password !== confirmPassword">
+            Passwords do not match.
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="btn-signup"
+          [disabled]="signupForm.invalid || password !== confirmPassword"
+        >
+          Sign Up
+        </button>
+      </form>
+
+      <div class="links">
+        <a routerLink="/login">Already have an account? Login</a>
+      </div>
+    </ng-container>
+
+    <!-- Success Message -->
+    <ng-template #successBlock>
+      <div class="success-message">
+        <p>Your account has been created successfully!</p>
+        <button (click)="confirmSuccess()" class="btn-confirm">Go to Login</button>
+      </div>
+    </ng-template>
+  </div>
+</div>
