@@ -33,23 +33,23 @@ export class UserService {
 
   findAll() {
     // return this.userModel.find();
-     return this.users.map(({ password, ...rest }) => rest);
+    return this.users.map(({ password, ...rest }) => rest);
   }
 
   findOne(id: string) {
     // return this.userModel.findById(id);
-  const user = this.users.find(u => u.id === id);
-  if (!user) throw new NotFoundException('User not found');
+    const user = this.users.find((u) => u.id === id);
+    if (!user) throw new NotFoundException('User not found');
 
-  const { password, ...rest } = user;
-  return rest;
+    const { password, ...rest } = user;
+    return rest;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     // const updated = await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
     // if (!updated) throw new NotFoundException('User not found');
     // return updated;
-    const index = this.users.findIndex(u => u.id === id);
+    const index = this.users.findIndex((u) => u.id === id);
     if (index === -1) throw new NotFoundException('User not found');
 
     this.users[index] = {
@@ -64,7 +64,7 @@ export class UserService {
     // const deleted = await this.userModel.findByIdAndDelete(id);
     // if (!deleted) throw new NotFoundException('User not found');
     // return deleted;
-    const index = this.users.findIndex(u => u.id === id);
+    const index = this.users.findIndex((u) => u.id === id);
     if (index === -1) throw new NotFoundException('User not found');
 
     const deleted = this.users[index];
