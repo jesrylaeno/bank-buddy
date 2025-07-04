@@ -13,7 +13,7 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.username = localStorage.getItem('username');
+    this.username = JSON.parse(localStorage.getItem('user') || '{}').username;
     if (!this.username) {
       // Redirect if not logged in
       this.router.navigate(['/login']);
