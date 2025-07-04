@@ -13,4 +13,8 @@ export class UserService {
   signUp(data: { username: string; email: string; password: string }) {
     return this.http.post(`${this.apiUrl}/user`, data);
   }
+
+  login(data: { username: string; password: string }) {
+    return this.http.post(`${this.apiUrl}/user/auth`, data);
+  }
 }

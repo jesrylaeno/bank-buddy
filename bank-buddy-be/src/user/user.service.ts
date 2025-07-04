@@ -71,4 +71,9 @@ export class UserService {
     this.users.splice(index, 1);
     return deleted;
   }
+
+  async findByUsername(username: string) {
+    // return this.userModel.findOne({ username });
+    return this.users.find((user) => user.username === username);
+  }
 }

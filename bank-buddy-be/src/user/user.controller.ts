@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
@@ -37,5 +38,18 @@ export class UserController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.userService.delete(id);
+  }
+
+  @Post('auth')
+  async auth(@Body() body: { username: string; password: string }) {
+    const user = await this.userService.findByUsername(body.username);
+
+    if (!user || user.password !== body.password) {
+      throw new UnauthorizedException('Invalid username or password');
+    }
+
+    // Return user without password
+    const { password, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   }
 }
