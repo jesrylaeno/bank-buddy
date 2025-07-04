@@ -1,0 +1,19 @@
+# Build output
+dist/
+build/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# Optional: Generated files or assets
+coverage/
+*.min.js
+*.bundle.js
+*.map
